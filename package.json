@@ -1,0 +1,13 @@
+{
+    "name": "amazon-price-tracker",
+    "version": "1.0.0",
+    "description": "Scrape Amazon UK prices and update Google Sheets",
+    "main": "scraper.js",
+    "scripts": {
+          "scrape": "node scraper.js"
+    },
+    "dependencies": {
+          "puppeteer": "^21.0.0",
+          "googleapis": "^126.0.0"
+    }
+}
