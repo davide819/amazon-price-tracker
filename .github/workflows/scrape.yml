@@ -1,28 +1,18 @@
 name: Scrape Amazon Prices
-
 on:
   schedule:
-      - cron: '0 * * * *'  # Run every hour
-        workflow_dispatch:  # Allow manual trigger
-
+      - cron: '0 * * * *'
+        workflow_dispatch:
         jobs:
           scrape:
               runs-on: ubuntu-latest
-
-                      steps:
-                            - name: Checkout repository
-                                    uses: actions/checkout@v4
-
-                                          - name: Setup Node.js
-                                                  uses: actions/setup-node@v4
-                                                          with:
-                                                                    node-version: '20'
-
-                                                                          - name: Install dependencies
-                                                                                  run: npm install
-
-                                                                                        - name: Run scraper
-                                                                                                env:
-                                                                                                          GOOGLE_SHEETS_CREDENTIALS: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}
-                                                                                                                    SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
-                                                                                                                            run: node index.js
+                  steps:
+                        - uses: actions/checkout@v4
+                              - uses: actions/setup-node@v4
+                                      with:
+                                                node-version: '20'
+                                                      - run: npm install
+                                                            - run: node index.js
+                                                                    env:
+                                                                              GOOGLE_SHEETS_CREDENTIALS: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}
+                                                                                        SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
