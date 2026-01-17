@@ -1,7 +1,6 @@
 const puppeteer = require('puppeteer');
 const { google } = require('googleapis');
 
-// ASINs to track
 const ASINS = [
   'B0DT6LG363',
   'B09FKZR5FW'
@@ -50,8 +49,8 @@ async function scrapeAmazon(asin) {
 }
 
 async function updateGoogleSheet(results) {
-  // ✅ FIXED: Use OIDC auth automatically (no credentials file)
   const auth = new google.auth.GoogleAuth({
+    credentials: JSON.parse(process.env.GOOGLE_CREDENTIALS),
     scopes: ['https://www.googleapis.com/auth/spreadsheets']
   });
   
