@@ -1,41 +1,27 @@
 name: Scrape Amazon Prices
 
-permissions:
-  id-token: write
-  contents: read
-
 on:
   schedule:
-    - cron: '0 * * * *' # every hour
-  workflow_dispatch:    # manual trigger
+    - cron: '0 * * * *'  # Every hour
+  workflow_dispatch:  # Manual trigger
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
-
+    
     steps:
-      # 1️⃣ Checkout code
       - uses: actions/checkout@v4
-
-      # 2️⃣ Setup Node.js
+      
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-
-      # 3️⃣ Authenticate to Google Cloud using GitHub OIDC
-      - name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v2
-        with:
-          workload_identity_provider: projects/480500/locations/global/workloadIdentityPools/github-pool/providers/github-provider
-          service_account: amazon-price-tracker@sunny-equinox-480500-g1.iam.gserviceaccount.com
-
-      # 4️⃣ Install dependencies
+      
       - name: Install dependencies
         run: npm install
-
-      # 5️⃣ Run scraper
+      
       - name: Run scraper
         env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
           SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
         run: npm run scrape
